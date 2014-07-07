@@ -1,2 +1,2 @@
 #!/bin/sh
-python ./djages/configs/${DEPLOYMENT_TARGET:="common"}/manage.py $*
+python ./kfl/configs/${DEPLOYMENT_TARGET:="common"}/manage.py $*
