@@ -1,0 +1,43 @@
+<VirtualHost *:8080>
+    ServerName 127.0.0.1
+
+    WSGIScriptAlias / /home/kfl/site/kfl/repository/kfl/configs/staging/staging.wsgi
+ 
+    ErrorLog /home/kfl/logs/apache.error.log
+    LogLevel warn
+
+    CustomLog /home/kfl/logs/apache.access.log combined
+    
+    ServerSignature Off
+</VirtualHost>
+
+<VirtualHost *:8081>
+    ServerName 127.0.0.1
+
+    Alias /media/ "/home/kfl/site/kfl/repository/kfl/media/"
+    <Directory "/home/kfl/site/kfl/repository/kfl/media/">
+        Options MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+        Header unset ETag
+        FileETag None
+        ExpiresActive on
+        ExpiresDefault "access plus 1 week"
+    </Directory>
+    
+    Alias /static/ "/home/kfl/site/kfl/repository/kfl/static/"
+    <Directory "/home/kfl/site/kfl/repository/kfl/static/">
+        Options MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+        Header unset ETag
+        FileETag None
+        ExpiresActive on
+        ExpiresDefault "access plus 1 week"
+    </Directory>
+</VirtualHost>
+
