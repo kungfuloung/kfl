@@ -1,11 +1,288 @@
-<!DOCTYPE html>
-<html>
+功夫龍是好網站!	
+<!-- <head> -->
+<style t/*ype="text/css">
+
+</style>
+<!-- </head> -->
+
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>{{ _("Django Mongodb Base") }}</title>
+	<title>{% block title %}{% endblock %}</title>
+	
+	<style type="text/css">
+		/*body 		{background-color:#d0e4fe;}*/
+		/*h1 			{color:orange; text-align:center;}*/
+		p  			{font-family:"Times New Roman";	font-size:20px;}
+		#header     { position: relative; height: 200px}
+		div.backg 	{ position: absolute; top: 0; left: 0; margin-top: 0; margin-left: 0;}
+		div.title 	{ position: absolute; top: 63; left: 0; font-family: arial; margin-left: 0}
+		div.title a:link {font-weight: bold;text-decoration: none;color: #FFFFFF}
+		div.title a:visited {font-weight: bold;text-decoration: none;color: #FFFFFF}
+		div.title a:hover, a:focus {font-weight: bold;text-decoration: none;color: #B3B3B3}
+		#logo2      { left: auto; right: 0}
+
+		.KPITable 	{overflow-y: scroll;overflow-x: hidden;}
+
+		/*body		{overflow-x: hidden; font: arial;background-color: black;color:white;}*/
+		body		{overflow-x: hidden; font: arial;}
+		*{font-family: arial; font-size: 13;}
+		p			{font-size:14;}
+
+		a:link {text-decoration: none;color: #333333}
+		a:visited {text-decoration: none;color: #333333}
+
+/*		a:link {text-decoration: none;color: #FFFFFF}
+		a:visited {text-decoration: none;color: #FFFFFF}
+*/
+		a:hover, a:focus {text-decoration: none;color: #B20000}
+
+		h3			{ font-size: 20}
+		.submit		{text-align: center;padding: 0; width:80;}
+
+
+		div.productsearch 	{ position: absolute; top: 200; left: 20; font-family: arial; margin-left: 0}
+		div.loginform 	{ position: absolute; top: 10; left: 800; font-family: arial; margin-left: 0}
+		div.producttable 	{ position: absolute; top: 100; left: 280; font-family: arial; margin-left: 0}
+
+		div.productbundletable 	{ position: absolute; top: 100; left: 970; font-family: arial; margin-left: 0}
+		div.productdownload 	{ position: absolute; top: 150; left: 750; font-family: arial; margin-left: 0}
+
+		/*div.footer 	{ position: absolute; top: 600; left: 750; font-family: arial; margin-left: 0}*/
+
+	</style>
+	<!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>		 -->
+	 <script>
+
+
+	// 	$.ajaxSetup({ 
+	// 	     beforeSend: function(xhr, settings) {
+	// 	         function getCookie(name) {
+	// 	             var cookieValue = null;
+	// 	             if (document.cookie && document.cookie != '') {
+	// 	                 var cookies = document.cookie.split(';');
+	// 	                 for (var i = 0; i < cookies.length; i++) {
+	// 	                     var cookie = jQuery.trim(cookies[i]);
+	// 	                     // Does this cookie string begin with the name we want?
+	// 	                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	// 	                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	// 	                     break;
+	// 	                 }
+	// 	             }
+	// 	         }
+	// 	         return cookieValue;
+	// 	         }
+	// 	         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+	// 	             // Only send the token to relative URLs i.e. locally.
+	// 	             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	// 	         }
+	// 	     } 
+	// 	});
+
+
+	// </script>
 </head>
+
+
 <body>
 
-Demo uihuilhuilhuih
+<div style="align:right"; class="loginform">
+	{% if not user.is_authenticated %}
+		<!-- {% if user.is_active %}
+			<form action="/accounts/logout/" method="post">
+				{% csrf_token %}
+				<input type="submit" value="Log Out" />
+			</form>
+		{% else %} -->
+		
+		
+		
 
-</body></html>
+
+			<form action="/accounts/login/" method="post">
+
+				<table border=0 align="right">
+					<col width="180">
+					<col width="160">
+					<col width="80">
+					<col width="160">
+					<col width="160">
+					<col width="615">
+					{% if next %}
+					<input type="hidden" name="next" value="{{ next }}" />
+					{% endif %}	
+
+					<tr>
+						<td colspan=5 align="right">
+							{% if lan == 'en' %}Please log in below...{% endif %}
+							{% if lan == 'cn' %}請登入網站...{% endif %}		
+						</td>
+					</tr>
+
+
+					<tr>
+						<td align="right">
+							{% if lan == 'en' %}Username:{% endif %}
+							{% if lan == 'cn' %}使用者名稱:{% endif %}
+						</td>
+						<td align="right">
+							<input type="text" name="username" value="{{ username}}" /><br />
+						</td>
+					<!-- </tr>
+					<tr> -->
+						<td align="right">
+							{% if lan == 'en' %}Password:{% endif %}
+							{% if lan == 'cn' %}密碼:{% endif %}
+							
+						</td>
+						<td align="right">
+							<input type="password" name="password" value="" /><br />
+						</td>
+						<td align="right">
+							{% csrf_token %}
+							
+							{% if lan == 'en' %}
+								<input type="submit" value="Log In" />
+							{% endif %}
+							{% if lan == 'cn' %}
+								<input type="submit" value="登入" />
+							{% endif %}				
+						</td>
+						<!-- <td>
+							<span style="float:right";>
+								<td><a href="/set_en">English</a></td>
+								<td><a href="/set_cn">中文</a></td>
+							</span>
+						</td> -->
+					</tr>
+
+				</table>
+
+
+
+			</form>
+
+
+
+		
+		
+		<!-- {% endif %} -->
+	{% else %}
+	
+		<table>
+				<col width="600">
+				
+			<tr>
+				<td align="right">
+					Hello, {{ user.username }}.
+						
+					<!-- <img src="{{obj.profile_pic.url}}" />
+					{{obj.profile_pic.url}}
+					 -->
+
+					{% if not user.is_active %}
+						
+
+						{% if lan == 'en' %}Your status is not active. Please contact website administrator{% endif %}
+						{% if lan == 'cn' %}您的帳戶未啟動. 請聯絡網管{% endif %}
+						
+					{% endif %}
+
+				</td>
+			</tr>
+
+			<tr>
+				<td align="right">
+					<form action="/accounts/logout/" method="post">
+						{% csrf_token %}
+
+						{% if lan == 'en' %}
+							<input type="submit" value="Log Out" />
+						{% endif %}
+						{% if lan == 'cn' %}
+							<input type="submit" value="登出" />
+						{% endif %}				
+
+
+						<!-- <span style="float:right";>
+							<td><a href="/set_en">English</a></td>
+							<td><a href="/set_cn">中文</a></td>
+						</span> -->
+					</form>
+				</td>
+			</tr>
+		</table>
+	{% endif %}	
+</div>
+	<!-- loading template tags -->	
+<!-- 	{% load KFLtemplatetags %}
+	<div class="backg">
+		{% load staticfiles %}
+		<img src="{% static "moneyheaffffder.jpg" %}">
+	</div>
+ -->
+
+<!-- <br><br><br><br><br><br><br><br><br><br> -->
+
+<br><br><br><br>	
+	
+	<div class="title">
+		<table style="width:1350px" bgcolor="#666666" float="left" >
+			<col width="160">
+			<col width="160">
+			<col width="160">
+			<col width="160">
+			<col width="160">
+			<col width="160">
+			<col width="160">
+			
+			<tr>
+				{% if lan == "en" %}
+					<td><a href="/products/overview">KFL Products</a></td>
+					<td><a href="/tutorials/overview">Video Tutorials</a></td>
+					<td><a href="/discussion/overview">Forum</a></td>
+					<td><a href="/discussion/overview">Master Sharing</a></td>
+					{% if user.is_active %}
+						<td><a href="/accounts/personal_information">Personal Information</a></td>
+					{% endif %}
+				{% endif %}
+				{% if lan == "cn" %}
+					<td><a href="/products/overview">產品</a></td>
+					<td><a href="/tutorials/overview">教學</a></td>
+					<td><a href="/discussion/overview">論壇</a></td>
+					<td><a href="/discussion/overview">師父分享</a></td>					
+					{% if user.is_active %}
+						<td><a href="/accounts/personal_information">個人設置</a></td>
+					{% endif %}
+				{% endif %}				
+				<td align="right">					
+					<a href="/set_en">English</a>
+					<a href="/set_cn">中文</a>
+				</td>
+		    </tr>
+			
+		</table>
+
+	</div>
+
+		<br>
+		
+
+	<!-- You Belong To {{ userprofile.sales_unit }}<br> -->
+
+
+	{% block content %}{% endblock %}
+
+
+
+
+	{% block footer %}{% endblock %}
+
+<!-- 
+<div class='footer'>
+	I'm a footer!
+</div>
+ -->
+</body>
+
+
+</html>
