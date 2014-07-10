@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'globals.views.globals_logout', name="globals-logout"),
 
     (r'^api/', include('api.urls')),
+    (r'^discussion/', include('discussion.urls')),
+    (r'^products/', include('product.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

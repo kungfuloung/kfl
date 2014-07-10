@@ -1,0 +1,111 @@
+
+{% extends "discussion_base.html" %}
+
+
+{% block discussion_content %}
+{% load KFLtemplatetags %}
+
+
+	<div class="producttable">
+		
+		{% if lan == 'en' %}You are currently replying to the following message:{% endif %}
+		{% if lan == 'cn' %}您正在回應下面這篇文章:{% endif %}
+
+		{% url 'postreply' displayed_thread.id as the_url %}
+
+		{% if lan == 'en' %}<form action="" method="post" onsubmit="return confirm('Sure to submit? The submitted content cannot be modified anymore!');">{% endif %}
+		{% if lan == 'cn' %}<form action="" method="post" onsubmit="return confirm('確定要提交文章嗎? 提交的內容將無法被更改!');">{% endif %}			
+			<table>	   			
+				<col width="50">
+				<col width="800">
+				
+				<tr>
+					<td colspan=2>
+						<HR>
+					</td>
+				</tr>			
+<!-- 
+	title = models.CharField(max_length=400, null=True, blank=True)
+
+	Content = models.TextField(max_length=10000, null=True, blank=True)	
+
+	language = models.ForeignKey(Language, null=True, blank=True)
+
+	posted_by = models.ForeignKey(UserProfile, related_name='p_by', null=True, blank=True)
+	posted_on = models.DateTimeField(null=True, blank=True)
+	
+	replied_by_master = models.BooleanField(default=False)
+
+
+	master_content = models.TextField(max_length=10000, null=True, blank=True)	
+	replied_by = models.ForeignKey(UserProfile, related_name='r_by', null=True, blank=True)
+	replied_on = models.DateTimeField(null=True, blank=True)	
+	
+	# translated_thread = models.ManyToManyField('self', related_name='t_thread', null=True, blank=True)
+	of_thread = models.ForeignKey(Thread, blank=True)
+	related_thread = models.ManyToManyField('self', related_name='r_thread', null=True, blank=True)
+ -->				
+				<tr>
+					<td colspan=2>
+
+						{{displayed_thread.posted_on}} by <b>{{displayed_thread.posted_by}}</b>:<br>
+						<b>{{displayed_thread.title}}</b>
+
+
+						<table>
+							<col width='30'>
+							<col width='970'>
+							<tr>
+								<td></td>
+								<td>
+									<pre>{{displayed_thread.Content}}</pre>
+								</td>
+							</tr>
+						</table>
+
+						
+					</td>
+				</tr>						
+				<tr>
+					<td colspan=2>
+						<HR>
+					</td>
+				</tr>							
+				<tr>
+					<td>
+						{% if lan == 'en' %}Content{% endif %}
+						{% if lan == 'cn' %}內容{% endif %}						
+					</td>
+					<td>
+						{{form_post.content}}
+						{% for error in form_post.content.errors %}
+							<font color="red">{{error}}</font>
+						{% endfor %}						
+					</td>				
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td>
+						{% csrf_token %}
+						
+						{% if lan == 'en' %}
+							<input type="submit" value="Submit" />
+						{% endif %}
+						{% if lan == 'cn' %}
+							<input type="submit" value="送出" />
+						{% endif %}						
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+
+
+
+
+
+
+{% endblock %}

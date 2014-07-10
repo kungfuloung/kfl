@@ -1,0 +1,144 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load KFLtemplatetags %}
+
+{% if lan == 'en' %}<h2>{{product.title_EN}}</h2>{% endif %}
+{% if lan == 'cn' %}<h2>{{product.title_CN}}</h2>{% endif %}
+
+
+
+		<HR>
+
+<table>
+	<col width='300'>
+	<col width='400'>
+	
+	<tr>
+		<td><img src="{{product.product_image.url}}"  style="width: 250;" /></td>
+		<td>
+			{% if lan == 'en' %}{{product.discription_EN}}{% endif %}
+			{% if lan == 'cn' %}{{product.discription_CN}}{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table>
+				<tr>
+					{% if lan == 'en' %}<td>Product Number: {{product.name}}</td>{% endif %}
+					{% if lan == 'cn' %}<td>產品序號: {{product.name}}</td>{% endif %}				
+				</tr>
+				<tr>
+					{% if lan == 'en' %}<td>Length: {{product.minute}} minutes {{product.second}} seconds in {{product.DVD_quantity}} disk(s)</td>{% endif %}
+					{% if lan == 'cn' %}<td>時間: {{product.minute}} 分 {{product.second}} 秒, DVD {{product.DVD_quantity}}片裝</td>{% endif %}				
+
+
+				</tr>	
+				<tr>
+					{% if lan == 'en' %}<td>Title: {{product.title_EN}}</td>{% endif %}
+					{% if lan == 'cn' %}<td>名稱: {{product.title_CN}}</td>{% endif %}				
+			
+
+				</tr>			
+				<tr>
+					{% if lan == 'en' %}<td>Category: {{product.category.name_en}}</td>{% endif %}
+					{% if lan == 'cn' %}<td>類別: {{product.category.name_cn}}</td>{% endif %}				
+				</tr>
+				<tr>
+					{% if lan == 'en' %}<td>Difficulty: {{product.level|level}}</td>{% endif %}
+					{% if lan == 'cn' %}<td>上手難度: {{product.level|level}}</td>{% endif %}				
+
+				</tr>			
+				<tr>
+					{% if lan == 'en' %}<td>Price: ${{product.price}} USD </td>{% endif %}
+					{% if lan == 'cn' %}<td>價格: USD ${{product.price}}</td>{% endif %}				
+				</tr>
+				<tr>					
+					{% load staticfiles %}
+					<td>		
+						Paypal:
+						<a href="{{product.paypal_button}}" target="_blank" ><img src="{% static "btn_cart_LG.GIF" %}" style="height: 25;"></a>
+
+					</td>		
+
+					
+				</tr>    	
+				<tr>									
+					<td>		
+						Taobao:
+						<a href="{{product.taobao_link}}" target="_blank" ><img src="{% static "taobao_button.PNG" %}" style="height: 25;"></a>
+
+					</td>		
+				</tr>    	
+
+			</table>
+		</td>
+		<td>
+
+			{% if lan == 'en' %}{% endif %}
+			{% if lan == 'cn' %}<embed src="{{product.youku_link}}" allowFullScreen="true" quality="high" width="400" height="300" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>{% endif %}
+
+		</td>
+	</tr>
+</table>
+<br>
+<br>
+{% if product.online_download.all %}
+	
+	<script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+	<div class="productdownload">
+		<table border=0>
+			<col width='50'>
+			<col width='80'>
+			<col width='80'>
+			<col width='80'>
+			<col width='300'>
+			<tr>
+				<td colspan=5>
+					{% if lan == 'en' %}<h2>Online Download</h2>{% endif %}
+					{% if lan == 'cn' %}<h2>網路下載</h2>{% endif %}
+				</td>
+			</tr>
+			<tr>
+				{% if lan == 'en' %}
+					<td><b>Section</td>
+					<td><b>Size</td>				
+					<td><b>Length</td>
+					<td><b>Price</td>
+					<td><b>Link</td>
+				{% endif %}
+
+				{% if lan == 'cn' %}
+					<td><b>段落</td>
+					<td><b>檔案大小</td>				
+					<td><b>時間</td>
+					<td><b>定價</td>
+					<td><b>下載</td>
+				{% endif %}
+			</tr>	
+			{% for item in product.online_download.all %}	
+			<tr>
+				<td>{{item.section_no}}</td>
+				<td>{{item.size}} MB</td>
+				<td>{{item.minute}}'{{item.second}}"</td>
+				<td>USD ${{item.price}}</td>
+				
+				<td><a href="{{item.link}}" class="gumroad-button">{{item.name}}</a></td>
+				
+
+			</tr>
+			{% endfor %}	
+		</table>
+	</div>
+{% endif %}
+
+
+
+
+
+<!-- <iframe height=498 width=510 src="{{product.youku_link}}" frameborder=0 allowfullscreen></iframe> -->
+
+
+{% endblock %}

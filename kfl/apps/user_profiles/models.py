@@ -68,6 +68,17 @@ class UserProfile(BaseImageModel):
     image      = models.ImageField(upload_to=get_upload_path_fun('userprofile'))
     img_list   = [k for (k, v) in locals().items() if imagespecfilter(v, ImageSpecField)]
 
+
+    #kfl fields
+    user = models.OneToOneField(User, unique=True)  
+    customer_number = models.CharField(max_length=30, null=True, blank=True)    
+    # language = models.ForeignKey('product.Language')
+    purchased_product = models.ManyToManyField('product.DVDProduct', related_name='p_product', null=True, blank=True)
+    last_viewed_product = models.ManyToManyField('product.DVDProduct', related_name='v_product', null=True, blank=True)
+
+    translator_status = models.BooleanField(default=False)
+    master_status = models.BooleanField(default=False)
+
     objects = UserProfileManager()
     
     def __unicode__(self):

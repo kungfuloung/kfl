@@ -1,0 +1,93 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load KFLtemplatetags %}
+
+{% if lan == 'en' %}<h3>Forum</h3>{% endif %}
+{% if lan == 'cn' %}<h3>論壇</h3>{% endif %}
+
+<font color="red">
+	{% for msg in state %}
+		{{ msg }}<br>
+	{% endfor %}
+</font>
+
+
+
+	{% block discussion_content %}{% endblock %}
+
+
+
+
+
+
+
+	<div class="productsearch">
+		<form action="/discussion/searchresults/" method="post">
+
+			<table>
+				<col width="80">
+				<col width="80">
+				{% for item in allcategory %}
+				<tr>
+					<td colspan=2>
+						{% url 'threadcategory' item.pid as the_url %}
+						<a href="{{the_url}}">
+							{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+							{% if lan == 'cn' %}{{item.title_CN}}{% endif %}
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+
+				<tr>
+					<td>
+						<br>
+					</td>
+				</tr>
+				<tr>	
+					<td align=left>
+						{% if lan == 'en' %}<b>Category{% endif %}
+						{% if lan == 'cn' %}<b>類別</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.category }}{% for error in form.category.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Language</b>{% endif %}
+						{% if lan == 'cn' %}<b>語言</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.language }}{% for error in form.language.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Match</b>{% endif %}
+						{% if lan == 'cn' %}<b>名稱</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.name }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>				
+				<tr>
+					<td colspan=2>
+						{% csrf_token %}
+						{% if lan == 'en' %}<input class='submit' type="submit" value="Search">{% endif %}
+						{% if lan == 'cn' %}<input class='submit' type="submit" value="搜尋">{% endif %}
+					</td>
+				</tr>
+				
+			</table>
+
+
+	    </form>   
+	</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,132 @@
+
+{% extends "discussion_base.html" %}
+
+
+{% block discussion_content %}
+{% load KFLtemplatetags %}
+
+	<div class="producttable">
+
+		<table>	   			
+			<col width="200">
+			<col width="440">
+			<col width="440">
+			
+			<tr>
+
+				<td colspan=2>
+					<HR>
+				</td>
+
+			</tr>
+			{% for item in allcategory|discreg:0 %}				
+
+
+				<tr>
+					<!-- {% url 'tutorialdisplay' tutorial.name as the_url %}
+					<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a> -->
+					<td>
+						{% url 'threadcategory' item.pid as the_url %}
+						<a href="{{the_url}}">
+							{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+							{% if lan == 'cn' %}{{item.title_CN}}{% endif %}
+						</a>
+
+<!-- 						{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.title_CN}}{% endif %}						 -->
+					</td>
+					<td>
+						{% if lan == 'en' %}{{item.discription_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.discription_CN}}{% endif %}						
+					</td>
+				</tr>
+			{% endfor %}
+		
+		</table>
+		<table>	   			
+			<col width="200">
+			<col width="440">
+			<col width="440">
+			
+			<tr>
+
+				<td colspan=2>
+					<HR>
+				</td>
+
+			</tr>
+			{% for item in allcategory|discreg:1 %}				
+
+
+				<tr>
+					<!-- {% url 'tutorialdisplay' tutorial.name as the_url %}
+					<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a> -->
+					<td>
+						{% url 'threadcategory' item.pid as the_url %}
+						<a href="{{the_url}}">
+							{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+							{% if lan == 'cn' %}{{item.title_CN}}{% endif %}
+						</a>
+
+<!-- 						{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.title_CN}}{% endif %}						 -->
+					</td>
+					<td>
+						{% if lan == 'en' %}{{item.discription_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.discription_CN}}{% endif %}						
+					</td>
+				</tr>
+			{% endfor %}
+		
+		</table>
+		<table>
+			
+
+			<col width="200">
+			<col width="440">
+			<col width="440">
+			
+			<tr>
+
+				<td colspan=2>
+					<HR>
+				</td>
+
+			</tr>	
+			{% for item in allcategory|discreg:2 %}				
+				<tr>
+					<!-- {% url 'tutorialdisplay' tutorial.name as the_url %}
+					<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a> -->
+					<td>
+<!-- 						{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.title_CN}}{% endif %}						 -->
+						{% url 'threadcategory' item.pid as the_url %}
+						<a href="{{the_url}}">
+							{% if lan == 'en' %}{{item.title_EN}}{% endif %}
+							{% if lan == 'cn' %}{{item.title_CN}}{% endif %}
+						</a>						
+					</td>
+					<td>
+						{% if lan == 'en' %}{{item.discription_EN}}{% endif %}
+						{% if lan == 'cn' %}{{item.discription_CN}}{% endif %}						
+					</td>
+				</tr>
+			{% endfor %}
+		
+		
+		</table>
+
+	</div>
+
+<!-- <embed src="http://player.youku.com/player.php/sid/XNzE3NTM0OTQ4/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed> -->
+
+
+<!-- <iframe height=498 width=510 src="http://player.youku.com/embed/XNzE3NTM0OTQ4" frameborder=0 allowfullscreen></iframe> -->
+
+
+
+
+
+
+
+{% endblock %}

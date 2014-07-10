@@ -1,0 +1,208 @@
+
+{% extends "discussion_base.html" %}
+
+
+{% block discussion_content %}
+{% load KFLtemplatetags %}
+<!-- 
+{% if lan == 'en' %}<h3>Forum</h3>{% endif %}
+{% if lan == 'cn' %}<h3>論壇</h3>{% endif %}
+
+{% for msg in state %}
+	{{ msg }}<br>
+{% endfor %}
+ -->
+
+	<div class="producttable">
+		<!-- {{available_language}} -->
+
+		{% if lan = 'en' %}In Language {% endif %}
+		{% if lan = 'cn' %}可選語言 {% endif %}
+		{% for language in available_language %}
+
+			{% url 'topiclanguagesearch' displayed_topics.id language.pid as the_url %}
+			<a href="{{the_url}}">
+				->{{language}}
+			</a>
+		{% endfor %}
+		
+		{% if user.is_active %}
+			<span style="float:right;">
+				{% url 'postreply' displayed_topics.id displayed_thread.id as the_url %}
+				<a href="{{the_url}}">
+					{% if lan = 'en' %}Reply to this Post{% endif %}
+					{% if lan = 'cn' %}回應此篇文章{% endif %}															
+				</a>
+			</span>		
+		{% endif %}
+
+		<table>	   			
+			<col width="250">
+			<col width="800">
+			<tr><td colspan=2><HR></td></tr>
+			<tr>
+				<td rowspan=2>
+					<b>{{displayed_thread.posted_by.user.username}}</b> <br> posted on {{displayed_thread.posted_on}}
+
+
+				</td>
+				<td>
+					<b>{{displayed_thread.title}}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>{{displayed_thread.Content}}
+				</td>
+			</tr>
+		{% if displayed_thread.master_content %}
+
+			<tr><td colspan=2><HR></td></tr>
+			<tr>
+				<td colspan=2>
+					<font color='blue'>Master <font color='red'>{{displayed_thread.replied_by.user.username}}</font> replied on {{displayed_thread.replied_on}}:<br>
+					<font color='blue'><pre>{{displayed_thread.master_content}}</pre></font>
+				</td>
+			</tr>
+
+		{% endif %}
+
+
+
+		</table>
+
+		<table>
+			<col width='50'>
+			<col width='1000'>
+
+			{% for reply in displayed_replies %}
+				<tr>
+					<td colspan=2><HR></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						{{reply.posted_on}} <b>{{reply.posted_by}}</b>:
+
+						{% if user.is_active %}
+							<span style="float:right;">
+								{% url 'replyreply' reply.id displayed_thread.id as the_url %}
+								<a href="{{the_url}}">
+									{% if lan = 'en' %}Reply to this message{% endif %}
+									{% if lan = 'cn' %}回覆此留言{% endif %}
+								</a>
+							</span>
+						{% endif %}
+						<br>
+						<table>
+							<col width='30'>
+							<col width='970'>
+							<tr>
+								<td></td>
+								<td>
+									<pre>{{reply.Content}}</pre>
+								</td>
+							</tr>
+						</table>
+
+
+							<table>
+								<col width='50'>
+								<col width='1000'>
+			
+									
+									{% if reply|r_of_r %}
+										{% for rofr in reply|r_of_r %}
+											<tr>
+												<td colspan=2><HR></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td colspan=2>
+													{{rofr.posted_on}} <b>{{rofr.posted_by}}</b>:<br>
+												</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>
+											<table>
+												<col width='30'>
+												<col width='970'>
+												<tr>
+													<td></td>
+													<td>
+														<pre>{{rofr.Content}}</pre>
+													</td>
+												</tr>
+											</table>									
+
+										
+										
+											
+										{% endfor %}
+
+									{% endif %}
+							</table>		
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+	</div>
+
+<!-- <embed src="http://player.youku.com/player.php/sid/XNzE3NTM0OTQ4/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed> -->
+
+
+<!-- <iframe height=498 width=510 src="http://player.youku.com/embed/XNzE3NTM0OTQ4" frameborder=0 allowfullscreen></iframe> -->
+
+
+
+
+<!-- 
+
+
+
+
+	<div class="productsearch">
+		<form action="/discussion/searchresults/" method="post">
+
+			<table>
+				<col width="80">
+				<col width="80">
+				<tr>	
+					<td align=left>
+						{% if lan == 'en' %}<b>Category{% endif %}
+						{% if lan == 'cn' %}<b>類別</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.category }}{% for error in form.category.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Match</b>{% endif %}
+						{% if lan == 'cn' %}<b>名稱</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.name }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						{% csrf_token %}
+						{% if lan == 'en' %}<input class='submit' type="submit" value="Search">{% endif %}
+						{% if lan == 'cn' %}<input class='submit' type="submit" value="搜尋">{% endif %}
+					</td>
+				</tr>
+				
+			</table>
+
+
+	    </form>   
+	</div>
+
+
+
+
+
+
+
+ -->
+
+{% endblock %}

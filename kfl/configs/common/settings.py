@@ -95,10 +95,10 @@ SECRET_KEY = 'dfvbqa_xar0vrpc1nor-0v+58e&%nn33w)737chmf$)#^jde8j'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-#    'django.template.loaders.filesystem.Loader',
-#    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-    'coffin.template.loaders.Loader',
+   'django.template.loaders.filesystem.Loader',
+   'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+    # 'coffin.template.loaders.Loader',
 )
 
 import jinja2
@@ -113,7 +113,8 @@ JINJA2_TEMPLATE_LOADERS = (
 
 JINJA2_DISABLED_APPS = (
     'admin',
-    'imagekit'
+    'imagekit',
+    
 )
 
 JINJA2_EXTENSIONS = (
@@ -159,7 +160,9 @@ INSTALLED_APPS = (
     'globals',
     'user_profiles',
     'api',
-    'proto'
+    'proto',
+    'product',
+    'discussion',
 )
 
 # A sample logging configuration. The only tangible logging

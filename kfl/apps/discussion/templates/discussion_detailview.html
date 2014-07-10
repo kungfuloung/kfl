@@ -1,0 +1,254 @@
+
+{% extends "discussion_base.html" %}
+
+
+{% block discussion_content %}
+{% load KFLtemplatetags %}
+<!-- 
+{% if lan == 'en' %}<h3>Forum</h3>{% endif %}
+{% if lan == 'cn' %}<h3>論壇</h3>{% endif %}
+
+{% for msg in state %}
+	{{ msg }}<br>
+{% endfor %}
+ -->
+
+	<div class="producttable">
+		{% if lan == 'en' %}You are searching <b>{{searched_term}}{{posted_by}}</b> {% if displayed_category %}in {% endif %}<b>{% if displayed_category.title_EN %}{{displayed_category.title_EN}}{% else %}in All Forums{% endif %}</b>{% endif %}
+		{% if lan == 'cn' %}您正在 <b>{% if displayed_category.title_CN %}{{displayed_category.title_CN}}{% else %}全部論壇{% endif %}</b> 搜尋 <b>{{searched_term}} {{posted_by}}</b>{% endif %}
+	
+		{% if displayed_category and user.is_active %}
+			<span style="float:right;">
+				{% url 'postcategory' displayed_category.pid as the_url %}
+				<a href="{{the_url}}">
+					{% if lan = 'en' %}Post Topics in <b>{{displayed_category.title_EN}}</b> Forum{% endif %}
+					{% if lan = 'cn' %}在<b>{{displayed_category.title_CN}}</b>論壇發文{% endif %}
+				</a>
+			</span>
+		{% endif %}
+
+		<table>	   			
+			<col width="50">
+			<col width="600">
+			<col width="320">
+			<col width="100">
+			<tr><td><br></td></tr>
+			<tr>
+				<td colspan=4>
+					<table>
+						<col width="50">
+						<col width="400">
+						<col width="100">
+						<col width="100">						
+						<col width="320">
+						<col width="100">
+						<!-- <col width="400"> -->
+						<tr>
+							{% if lan = 'en' %}
+								<td><b>ID</td>
+								<td><b>Thread Topic</td>
+								<td><b>Replied by Master</td>
+								<td><b>Language</td>
+								<td><b>Time Stamp</td>
+								<td><b>Replies</td>
+							{% endif %}
+							{% if lan = 'cn' %}
+								<td><b>ID</td>
+								<td><b>標題</td>
+								<td><b>師父已回答</td>
+								<td><b>語言</td>
+								<td><b>時間</td>
+								<td><b>總回應</td>
+							{% endif %}							
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+
+				<td colspan=4>
+					<HR>
+				</td>
+
+			</tr>
+			{% if displayed_topics %}
+				{% for item in displayed_topics %}				
+
+				<tr>
+					<td>
+						{{item.id}}		
+						{% if user.is_superuser %}
+							{% url 'threaddelete' item.id as the_url %}
+							<!-- <form action="{{url}}"><input type="submit" value="translate!"></form> -->
+							<form action="{{the_url}}" onsubmit="return confirm('Are you sure you want to delete the topic?');"><input type="submit" value="Delete"></form>
+							<!-- <a href="{{the_url}}"><input type="submit" value="Delete"></a> -->
+						{% endif %}				
+					</td>
+					<td>
+						<table>
+								<col width="400">
+								<col width="100">
+								<col width="100">
+								{% for subitem in item|findcont %}
+							
+								
+				
+								<tr>
+									<!-- {% url 'tutorialdisplay' tutorial.name as the_url %}
+									<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a> -->
+									
+									<td>
+										{% url 'threaddetail' subitem.id as the_url %}
+										<a href="{{the_url}}">										
+										{{subitem.title}}
+										</a>
+										{% if userprofile.translator_status %}
+											{% url 'threadtranslate' item.id subitem.id as the_url %}
+											<!-- <form action="{{url}}"><input type="submit" value="translate!"></form> -->
+											<a href="{{the_url}}"><input type="submit" value="translate!"></a>
+										{% endif %}
+										
+									</td>
+								
+									<td>
+
+										{% if subitem.replied_by %}
+											{{subitem.replied_by}}
+										{% else %}
+											{% if userprofile.master_status %}
+												{% url 'masterreply' subitem.id as the_url %}
+												<!-- <form action="{{url}}"><input type="submit" value="translate!"></form> -->
+												<a href="{{the_url}}"><input type="submit" value="M_Reply"></a>
+											{% endif %}
+
+										{% endif %}
+									</td>
+									<td>
+
+										
+										{% url 'threadinlanguage' subitem.language.name as the_url %}
+										<a href="{{the_url}}">
+											{{subitem.language.name}}
+										
+										</a>
+										<!-- {% if lan = 'cn' %}<b>{{item.update_by}}</b> 在 {{item.update_on}} 發佈{% endif %} -->
+									</td>
+
+							<!-- 		<td>
+										{% if lan = 'en' %}Updated by 
+									
+										{% url 'threadpostedby' item.update_by.user.username as the_url %}
+										<a href="{{the_url}}"><b>{{item.update_by}}</b></a>											
+										on {{item.update_on}}{% endif %}
+											
+										{% if lan = 'cn' %}
+
+										{% url 'threadpostedby' item.update_by.user.username as the_url %}
+										<a href="{{the_url}}"><b>{{item.update_by}}</b></a>
+
+										在 {{item.update_on}} 發佈{% endif %}
+										
+									</td> -->									
+								</tr>
+								
+								{% endfor %}
+							</table>
+						
+					</td>
+
+
+					<td>
+						{% if lan = 'en' %}Updated by 
+					
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.update_by}}</b></a>											
+						on {{item.update_on}}{% endif %}
+							
+						{% if lan = 'cn' %}
+
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.update_by}}</b></a>
+
+						在 {{item.update_on}} 發佈{% endif %}
+						
+					</td>
+					<td>
+						{{item.reply_number}}
+					</td>
+				</tr>
+					<tr>
+						<td colspan=4>
+							<HR>
+						</td>
+					</tr>				
+				{% endfor %}
+
+			{% else %}
+				<tr>
+					<td></td>				
+					<td><b>
+						{% if lan = 'en' %}No Results{% endif %}
+						{% if lan = 'cn' %}無結果{% endif %}							
+					</td>
+				</tr>
+			{% endif %}
+		</table>
+
+	</div>
+
+<!-- <embed src="http://player.youku.com/player.php/sid/XNzE3NTM0OTQ4/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed> -->
+
+
+<!-- <iframe height=498 width=510 src="http://player.youku.com/embed/XNzE3NTM0OTQ4" frameborder=0 allowfullscreen></iframe> -->
+
+
+
+
+<!-- 
+
+
+
+
+	<div class="productsearch">
+		<form action="/discussion/searchresults/" method="post">
+
+			<table>
+				<col width="80">
+				<col width="80">
+				<tr>	
+					<td align=left>
+						{% if lan == 'en' %}<b>Category{% endif %}
+						{% if lan == 'cn' %}<b>類別</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.category }}{% for error in form.category.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Match</b>{% endif %}
+						{% if lan == 'cn' %}<b>名稱</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.name }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td colspan=2>
+						{% csrf_token %}
+						{% if lan == 'en' %}<input class='submit' type="submit" value="Search">{% endif %}
+						{% if lan == 'cn' %}<input class='submit' type="submit" value="搜尋">{% endif %}
+					</td>
+				</tr>
+				
+			</table>
+
+
+	    </form>   
+	</div>
+
+
+
+
+
+
+
+ -->
+
+{% endblock %}
