@@ -7,13 +7,16 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'globals.views.home', name="globals-home"),
+    # url(r'^$', 'globals.views.home', name="globals-home"),
+    url(r'^$', 'product.views.homepage'),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     url(r'^logout/$', 'globals.views.globals_logout', name="globals-logout"),
 
     (r'^api/', include('api.urls')),
     (r'^discussion/', include('discussion.urls')),
     (r'^products/', include('product.urls')),
+
+
 )
 
 urlpatterns += staticfiles_urlpatterns()
