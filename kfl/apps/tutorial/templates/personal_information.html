@@ -1,0 +1,137 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+		
+	{% if userprofile.translator_status %}
+		You are a translator!
+		<table>
+			{% if lan == "en" %}
+				<tr>
+					<td>ID</td>
+					<td>Topics</td>
+					<td>Posted On</td>
+				</tr>
+			{% endif %}
+			{% if lan == "cn" %}
+				<tr>
+					<td>ID</td>
+					<td>主題</td>
+					<td>時間</td>
+				</tr>
+			{% endif %}
+
+			{% for item in thread_not_translated %}			
+				<tr>
+					<td>{{item.id}}</td>
+
+					<td>
+						{% url 'threaddetail' item.id as the_url %}
+						<a href="{{the_url}}">{{item.title}}</a>
+					</td>
+					<td>
+						{% if lan = 'en' %}Posted by 
+					
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.posted_by}}</b></a>											
+						on {{item.posted_on}}{% endif %}
+							
+						{% if lan = 'cn' %}
+
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.posted_by}}</b></a>
+
+						在 {{item.posted_on}} 發佈{% endif %}
+						
+					</td>
+					<td>
+						{% url 'masterreply' item.id as the_url %}					
+						<a href="{{the_url}}"><input type="submit" value="師父回覆"></a>
+
+						
+					</td>
+				</tr>
+			{% endfor %}
+
+		</table>
+
+	{% endif %}
+
+	{% if userprofile.master_status %}
+	<hr>
+		You are a master!
+		<table>
+			<col width=100>
+			<col width=300>
+			<col width=300>
+			<col width=100>
+			{% if lan == "en" %}
+				<tr>
+					<td>ID</td>
+					<td>Topics</td>
+					<td>Posted On</td>
+				</tr>
+			{% endif %}
+			{% if lan == "cn" %}
+				<tr>
+					<td>ID</td>
+					<td>主題</td>
+					<td>時間</td>
+				</tr>
+			{% endif %}
+
+			{% for item in thread_not_replied %}			
+				<tr>
+					<td>{{item.id}}</td>
+
+					<td>
+						{% url 'threaddetail' item.id as the_url %}
+						<a href="{{the_url}}">{{item.title}}</a>
+					</td>
+					<td>
+						{% if lan = 'en' %}Posted by 
+					
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.posted_by}}</b></a>											
+						on {{item.posted_on}}{% endif %}
+							
+						{% if lan = 'cn' %}
+
+						{% url 'threadpostedby' item.update_by.user.username as the_url %}
+						<a href="{{the_url}}"><b>{{item.posted_by}}</b></a>
+
+						在 {{item.posted_on}} 發佈{% endif %}
+						
+					</td>
+					<td>
+						{% url 'masterreply' item.id as the_url %}					
+						<a href="{{the_url}}"><input type="submit" value="師父回覆"></a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>		
+	{% endif %}
+
+	<!-- {% if not user.is_authenticated %}
+		{{ state }}
+		<form action="/accounts/login/" method="post">
+			{% csrf_token %}
+			{% if next %}
+			<input type="hidden" name="next" value="{{ next }}" />
+			{% endif %}
+			username:
+			<input type="text" name="username" value="{{ username}}" /><br />
+			password:
+			<input type="password" name="password" value="" /><br />
+
+			<input type="submit" value="Log In" />
+		</form>
+
+		
+
+	{% endif %} -->
+
+
+{% endblock %}

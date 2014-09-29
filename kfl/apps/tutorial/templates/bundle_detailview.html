@@ -1,0 +1,239 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load KFLtemplatetags %}
+
+{% if lan == 'en' %}<h3>Product Catalog</h3><p>Click on the pictures to see product details{% endif %}
+{% if lan == 'cn' %}<h3>產品目錄</h3><p>點擊圖片可看詳細敘述{% endif %}
+<br>
+<font color="red">
+	{% for msg in state %}
+		{{ msg }}<br>
+	{% endfor %}
+</font>
+<!-- 	<table>
+		<tr>
+			<td>{{form.category}}</td>
+		</tr>	
+
+	</table> -->
+
+<!-- <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script> -->
+
+	
+	<div class="productsearch">
+		<form action="/products/overview/" method="post">
+
+			<table>
+				<col width="80">
+				<col width="80">
+				{% for item in allcategory %}
+				<tr>
+					<td colspan=2>
+						{% url 'productcategory' item.pid as the_url %}
+						<a href="{{the_url}}">
+							{% if lan == 'en' %}{{item.name_en}}{% endif %}
+							{% if lan == 'cn' %}{{item.name_cn}}{% endif %}
+						</a>
+					</td>
+				</tr>
+				{% endfor %}
+
+				<tr>
+					<td>
+						<br>
+					</td>
+				</tr>
+				<tr>	
+					<td align=left>
+						{% if lan == 'en' %}<b>Category{% endif %}
+						{% if lan == 'cn' %}<b>類別</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.category }}{% for error in form.category.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Match</b>{% endif %}
+						{% if lan == 'cn' %}<b>名稱</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.name }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Difficulty</b>{% endif %}
+						{% if lan == 'cn' %}<b>上手難度</b>{% endif %}					
+					</td>
+					<td align=left>{{ form.level }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>
+				</tr>
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Language</b>{% endif %}
+						{% if lan == 'cn' %}<b>語言版本</b>{% endif %}
+					</td>								
+					<td align=left>{{ form.language }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>				
+				</tr>	
+				<tr>
+					<td align=left>
+						{% if lan == 'en' %}<b>Online Download</b>{% endif %}
+						{% if lan == 'cn' %}<b>網路下載</b>{% endif %}
+					</td>
+					<td align=left>{{ form.I_download }}{% for error in form.name.errors %}<font color="red">{{error}}</font>{% endfor %}</td>			
+				</tr>
+				<tr>
+					<td colspan=2>
+						{% csrf_token %}
+						{% if lan == 'en' %}<input class='submit' type="submit" value="Search">{% endif %}
+						{% if lan == 'cn' %}<input class='submit' type="submit" value="搜尋">{% endif %}
+					</td>
+				</tr>
+				
+			</table>
+
+
+	    </form>   
+	</div>
+
+
+	<div class="producttable">
+		<table>
+			<col width="150">
+			<col width="200">
+			<col width="500">
+
+
+				
+				
+				
+				
+			
+					<tr>
+						<td colspan=3><HR></td>
+					</tr>
+					<tr>
+
+							
+											
+						<td rowspan=5>							
+							<img src="{{displayed_bundle.product_image.url}}"  style="height: 100;" />
+
+						</td>
+						<td>
+							{% if lan == 'en' %}Product Number: {% endif %}
+							{% if lan == 'cn' %}產品序號: {% endif %}				
+							{% for item in displayed_bundle.products.all %}
+								{{item.name}},
+							{% endfor %}
+						</td>
+						<td rowspan=5>
+							{% if lan == 'en' %}{{displayed_bundle.discription_EN}}{% endif %}
+							{% if lan == 'cn' %}{{displayed_bundle.discription_CN}}{% endif %}
+
+						</td>
+					</tr>	
+
+					<tr>
+						{% if lan == 'en' %}<td>Title: {{displayed_bundle.title_EN}}</td>{% endif %}
+						{% if lan == 'cn' %}<td>名稱: {{displayed_bundle.title_CN}}</td>{% endif %}				
+
+
+					</tr>			
+					<tr>
+						<td>
+							{% if lan == 'en' %}Category: {{displayed_bundle.category.name_en}}{% endif %}
+							{% if lan == 'cn' %}類別: {{displayed_bundle.category.name_cn}}{% endif %}				
+
+							{% for item in displayed_bundle.category.all %}
+								{% if lan == 'en' %}{{item.name_en}}, {% endif %}
+								{% if lan == 'cn' %}{{item.name_cn}}, {% endif %}				
+							{% endfor %}
+						</td>
+						
+
+					<tr>
+						{% if lan == 'en' %}<td>Price: ${{displayed_bundle.price}} USD </td>{% endif %}
+						{% if lan == 'cn' %}<td>價格: USD ${{displayed_bundle.price}}</td>{% endif %}				
+						
+						{% load staticfiles %}
+
+					</tr>    	
+
+					<tr>
+						<td>
+							<a href="{{displayed_bundle.paypal_button}}" target="_blank" ><img src="{% static "btn_cart_LG.GIF" %}"></a>							
+						</td>
+					</tr>
+
+
+
+			<tr>
+				<td colspan=3><b>
+					{% if lan == 'en' %}This bundle includes the following products with <font color="red">{{displayed_bundle.percent_off}}%</font> off{% endif %}
+					{% if lan == 'cn' %}此產品組合包含以下產品並提供了 <font color="red">{{displayed_bundle.percent_off}}%</font> 的折扣{% endif %}
+				</td>
+			</tr>
+		    {% for product in displayed_bundle.products.all %}
+				
+				
+				
+				
+			
+					<tr>
+						<td colspan=3><HR></td>
+					</tr>
+					<tr>
+
+							
+											
+						<td rowspan=4>
+
+							{% url 'productdisplay' product.name as the_url %}
+							<a href="{{the_url}}"><img src="{{product.product_image.url}}"  style="height: 100;" /></a>
+						</td>
+						{% if lan == 'en' %}<td>Product Number: {{product.name}}</td>{% endif %}
+						{% if lan == 'cn' %}<td>產品序號: {{product.name}}</td>{% endif %}				
+
+						{% if lan == 'en' %}<td>Length: {{product.minute}} minutes {{product.second}} seconds in {{product.DVD_quantity}} disk(s)</td>{% endif %}
+						{% if lan == 'cn' %}<td>時間: {{product.minute}} 分 {{product.second}} 秒, DVD {{product.DVD_quantity}}片裝</td>{% endif %}				
+
+
+					</tr>	
+					<tr>
+						{% if lan == 'en' %}<td>Title: {{product.title_EN}}</td>{% endif %}
+						{% if lan == 'cn' %}<td>名稱: {{product.title_CN}}</td>{% endif %}				
+
+						{% if lan == 'en' %}<td>Internet Download: {% if product.online_download.all %}<b><a href="{{the_url}}" class="gumroad-button">Available</a> {% else %} No {% endif %}</td>{% endif %}
+						{% if lan == 'cn' %}<td>網路下載:  {% if product.online_download.all %} <b><a href="{{the_url}}" class="gumroad-button">可下載</a> {% else %} 無 {% endif %}</td>{% endif %}				
+
+					</tr>			
+					<tr>
+						{% if lan == 'en' %}<td>Category: {{product.category.name_en}}</td>{% endif %}
+						{% if lan == 'cn' %}<td>類別: {{product.category.name_cn}}</td>{% endif %}				
+
+						{% if lan == 'en' %}<td>Difficulty: {{product.level|level}}</td>{% endif %}
+						{% if lan == 'cn' %}<td>上手難度: {{product.level|level}}</td>{% endif %}				
+
+					</tr>			
+
+					<tr>
+						{% if lan == 'en' %}<td>Price: ${{product.price}} USD </td>{% endif %}
+						{% if lan == 'cn' %}<td>價格: USD ${{product.price}}</td>{% endif %}				
+						
+						{% load staticfiles %}
+						<td>		
+							<a href="{{product.paypal_button}}" target="_blank" ><img src="{% static "btn_cart_LG.GIF" %}"></a>
+
+						</td>		
+
+						
+					</tr>    	
+
+
+
+				
+			{% endfor %}
+		</table>
+	</div>		
+
+{% endblock %}
