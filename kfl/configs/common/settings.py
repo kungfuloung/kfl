@@ -163,7 +163,7 @@ INSTALLED_APPS = (
     'proto',
     'product',
     'discussion',
-    'Tutorial',
+    'tutorial',
 )
 
 # A sample logging configuration. The only tangible logging
