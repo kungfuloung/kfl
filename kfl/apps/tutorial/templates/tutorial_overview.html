@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load KFLtemplatetags %}
+
+{% if lan == 'en' %}<h3>Video Tutorials</h3>{% endif %}
+{% if lan == 'cn' %}<h3>網路教學</h3>{% endif %}
+
+{% for msg in state %}
+	{{ msg }}<br>
+{% endfor %}
+
+		<table>	   			
+			<col width="440">
+			<col width="440">
+			<col width="440">
+			<tr>
+					
+				{% for tutorial in displayed_tutorials %}				
+					<td>
+						{% url 'tutorialdisplay' tutorial.name as the_url %}
+						<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a>
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				{% for tutorial in displayed_tutorials %}
+					<td align="center"><h3>
+						{% if lan == 'en' %}{{tutorial.title_EN}}{% endif %}
+						{% if lan == 'cn' %}{{tutorial.title_CN}}{% endif %}						
+					</td>
+				{% endfor %}
+			</tr>							
+			<tr>
+				{% for tutorial in displayed_tutorials %}
+					<td align="center">
+						{% if lan == 'en' %}{{tutorial.discription_EN}}{% endif %}
+						{% if lan == 'cn' %}{{tutorial.discription_CN}}{% endif %}						
+					</td>
+				{% endfor %}
+			</tr>
+		</table>
+<!-- <embed src="http://player.youku.com/player.php/sid/XNzE3NTM0OTQ4/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed> -->
+
+
+<!-- <iframe height=498 width=510 src="http://player.youku.com/embed/XNzE3NTM0OTQ4" frameborder=0 allowfullscreen></iframe> -->
+
+
+{% endblock %}
