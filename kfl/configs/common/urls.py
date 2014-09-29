@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     (r'^api/', include('api.urls')),
     (r'^discussion/', include('discussion.urls')),
     (r'^products/', include('product.urls')),
+    (r'^tutorials/', include('tutorial.urls')),
 
 
 )
