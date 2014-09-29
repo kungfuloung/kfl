@@ -33,7 +33,9 @@ def overview(request):
 
     displayed_tutorials = TutorialCategory.objects.all()
 
-    
+
+
+
     return render_to_response('tutorial_overview.html',{'displayed_tutorials':displayed_tutorials, 'state':state, 'username':username, 'user':user, 'lan':lan}, RequestContext(request))
 
 def tutorialview(request, tutorialname):
