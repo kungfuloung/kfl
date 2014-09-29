@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     (r'^products/', include('product.urls')),
     (r'^tutorials/', include('tutorial.urls')),
 
+    url(r'^set_cn/$', 'product.views.set_cn'),
+    url(r'^set_en/$', 'product.views.set_en'),
 
 )
 
