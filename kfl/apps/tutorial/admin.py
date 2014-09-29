@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 
-from Tutorial.models import VideoTutorial, TutorialCategory
+from tutorial.models import VideoTutorial, TutorialCategory
 
 
 

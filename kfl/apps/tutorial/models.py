@@ -1,5 +1,5 @@
 from django.db import models
-from KFLProduct.models import UserProfile
+from product.models import UserProfile
 
 
 

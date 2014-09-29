@@ -8,10 +8,10 @@ from django.contrib.auth.decorators import login_required
 
 import datetime
 
-from KFLProduct.models import UserProfile
-from KFLProduct.views import setlanguage
+from product.models import UserProfile
+from product.views import setlanguage
 
-from Tutorial.models import TutorialCategory, VideoTutorial
+from tutorial.models import TutorialCategory, VideoTutorial
 
 # Create your views here.
 
