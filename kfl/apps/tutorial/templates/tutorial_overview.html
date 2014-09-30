@@ -21,7 +21,7 @@
 				{% for tutorial in displayed_tutorials %}				
 					<td>
 						{% url 'tutorial.views.tutorialview' tutorial.name as the_url %}
-						<a href="{{the_url}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a>
+						<a href="tutorial/{{tutorial.name}}"><img src="{{tutorial.tutorial_pic.url}}"  style="width: 440;" /></a>
 					</td>
 				{% endfor %}
 			</tr>
